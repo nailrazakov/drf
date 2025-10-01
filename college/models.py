@@ -21,6 +21,9 @@ class Course(models.Model):
         help_text="Укажите описание курса",
     )
 
+    def __str__(self):
+        return f'{self.name}'
+
     class Meta:
         verbose_name = "Курс"
         verbose_name_plural = "Курсы"
@@ -59,6 +62,9 @@ class Lesson(models.Model):
         blank=True,
         null=True,
     )
+
+    def __str__(self):
+        return f'{self.name}'
 
     class Meta:
         verbose_name = "Урок"
