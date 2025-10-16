@@ -2,6 +2,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView,
 from rest_framework.viewsets import ModelViewSet
 from college.models import Lesson, Course
 from college.serializers import LessonSerializer, CourseSerializer
+from rest_framework.permissions import IsAuthenticated
 
 
 class LessonCreateAPIView(CreateAPIView):
@@ -33,3 +34,4 @@ class CourseViewSet(ModelViewSet):
     """Реализация CRUD для курса через Viewset"""
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    permission_classes = [IsAuthenticated]
