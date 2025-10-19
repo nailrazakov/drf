@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from users.models import User
 from users.services import Payments
-from users.serializers import PaymentSerializer, UserSerializer
+from users.serializers import PaymentSerializer, UserSerializer, UserPublicSerializer
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
@@ -27,14 +27,18 @@ class UserCreateAPIView(CreateAPIView):
 
 class UserListAPIView(ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserPublicSerializer
     permission_classes = [IsAuthenticated]
 
 
 class UserRetrieveAPIView(RetrieveAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.get_object() == self.request.user:
+            return UserSerializer
+        return UserPublicSerializer
 
 
 class UserUpdateAPIView(UpdateAPIView):
@@ -42,8 +46,20 @@ class UserUpdateAPIView(UpdateAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)
+
+    def get_object(self):
+        return self.request.user
+
 
 class UserDestroyAPIView(DestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)
+
+    def get_object(self):
+        return self.request.user

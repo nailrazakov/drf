@@ -10,6 +10,14 @@ class PaymentSerializer(ModelSerializer):
 
 
 class UserSerializer(ModelSerializer):
+    payments = PaymentSerializer(source='user_set', many=True, read_only=True)
+
     class Meta:
         model = User
         fields = '__all__'
+
+
+class UserPublicSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        exclude = ['password', 'first_name']
