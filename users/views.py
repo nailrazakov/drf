@@ -1,5 +1,6 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
-from users.models import Payments, User
+from users.models import User
+from users.services import Payments
 from users.serializers import PaymentSerializer, UserSerializer
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend

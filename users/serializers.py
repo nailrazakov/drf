@@ -1,7 +1,6 @@
-from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
-from college.models import Course, Lesson
-from users.models import User, Payments
+from users.models import User
+from users.services import Payments
 
 
 class PaymentSerializer(ModelSerializer):
