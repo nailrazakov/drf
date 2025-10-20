@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from college.models import Course, Lesson
-from users.models import User, Payments
+from users.models import User
+from users.services import  Payments
 
 # Register your models here.
 admin.site.register(User)
