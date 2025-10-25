@@ -3,6 +3,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView,
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from college.models import Lesson, Course, Subscription
+from college.paginators import CoursePaginator, LessonPaginator
 from college.serializers import LessonSerializer, CourseSerializer, SubscriptionSerializer
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsModerator, IsOwner
@@ -24,6 +25,7 @@ class LessonListAPIView(ListAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     permission_classes = (IsAuthenticated, IsModerator | IsOwner, )
+    pagination_class = LessonPaginator
 
 
 class LessonRetrieveAPIView(RetrieveAPIView):
@@ -48,6 +50,7 @@ class CourseViewSet(ModelViewSet):
     """Реализация CRUD для курса через Viewset"""
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    pagination_class = CoursePaginator
 
     def get_permissions(self):
         if self.action == "create":
