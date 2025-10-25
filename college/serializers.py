@@ -1,15 +1,17 @@
 from rest_framework.fields import SerializerMethodField
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from college.models import Course, Lesson
+from college.validators import validate_url
 
 
-class LessonSerializer(ModelSerializer):
+class LessonSerializer(serializers.ModelSerializer):
+    url_video = serializers.CharField(validators=[validate_url])
     class Meta:
         model = Lesson
         fields = '__all__'
 
 
-class CourseSerializer(ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
     lessons_count = SerializerMethodField()
     lessons = LessonSerializer(source='lesson_set', many=True, read_only=True)
 
