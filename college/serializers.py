@@ -1,15 +1,16 @@
 from rest_framework.fields import SerializerMethodField
 from rest_framework import serializers
 from college.models import Course, Lesson, Subscription
-from college.validators import validate_url
+from college.validators import YouTubeURLValidator
 
 
 class LessonSerializer(serializers.ModelSerializer):
-    url_video = serializers.CharField(validators=[validate_url], required=False)
+    url_video = serializers.CharField(max_length=100, validators=[YouTubeURLValidator(field='url_video')])
 
     class Meta:
         model = Lesson
         fields = '__all__'
+        extra_kwargs = {'url_video': {'validators': []}}
 
 
 class CourseSerializer(serializers.ModelSerializer):

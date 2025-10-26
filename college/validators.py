@@ -1,7 +1,10 @@
-from rest_framework.exceptions import ValidationError
+from rest_framework.serializers import ValidationError
 
 
-def validate_url(value):
-    if value:
-        if 'youtube.com' not in value.lower():
-            raise ValidationError('Вы можете ссылаться только на источник youtube.com')
+class YouTubeURLValidator:
+    def __init__(self, field):
+        self.field = field
+
+    def __call__(self, value):
+        if value and 'youtube.com' not in value.lower():
+            raise ValidationError('Разрешены только ссылки на youtube.com')
