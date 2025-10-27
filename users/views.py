@@ -1,10 +1,27 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from users.models import User
-from users.services import Payments
+from users.services import Payments, create_stripe_price, create_stripe_product, create_stripe_session
 from users.serializers import PaymentSerializer, UserSerializer, UserPublicSerializer
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
+
+
+class PaymentCreateView(CreateAPIView):
+    serializer_class = PaymentSerializer
+    queryset = Payments.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        payment = serializer.save(user=self.request.user)
+        amount = payment.amount
+        product = create_stripe_product(payment.course.name)
+        price = create_stripe_price(amount, product.id)
+        session_id, link = create_stripe_session(price)
+        print(session_id, link)
+        payment.session_id = session_id
+        payment.link = link
+        payment.save()
 
 
 class PaymentListAPIView(ListAPIView):
