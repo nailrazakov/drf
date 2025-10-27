@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'college',
     'django_filters',
     'rest_framework_simplejwt',
+    'drf_yasg',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
