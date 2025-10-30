@@ -40,6 +40,9 @@ class Payments(models.Model):
     method = models.TextField(
         max_length=15, choices=PAY_METHOD_CHOOSES, default="не выбрано"
     )
+    link = models.CharField(verbose_name='ссылка на платеж', blank=True, null=True)
+
+    session_id = models.CharField(verbose_name='id-платежа', blank=True, null=True)
 
     def __str__(self):
         return f"Платеж {self.amount} руб. {self.method}\n{self.user} {self.course} {self.lesson}"
