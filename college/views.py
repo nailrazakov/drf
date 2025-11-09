@@ -8,6 +8,8 @@ from college.serializers import LessonSerializer, CourseSerializer, Subscription
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsModerator, IsOwner
 from rest_framework.views import APIView
+from college.tasks import send_information
+
 
 
 class LessonCreateAPIView(CreateAPIView):
@@ -69,6 +71,11 @@ class CourseViewSet(ModelViewSet):
         course = serializer.save()
         course.owner = self.request.user
         course.save()
+
+    def perfom_update(self, serializer):
+        """Вызов задачи на отправку сообщения об обновлении курса"""
+        course = serializer.save()
+        send_information.delay(course.id)
 
 
 class SubscriptionAPIView(APIView):

@@ -18,7 +18,6 @@ class PaymentCreateView(CreateAPIView):
         product = create_stripe_product(payment.course.name)
         price = create_stripe_price(amount, product.id)
         session_id, link = create_stripe_session(price)
-        print(session_id, link)
         payment.session_id = session_id
         payment.link = link
         payment.save()
