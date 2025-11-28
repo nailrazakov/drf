@@ -19,7 +19,9 @@
   ```
   python -m venv venv
   ```
-- Создать файл ``.env``, который необходимо заполнить данными из файла ``env.sample``
+- Создать файл ``.env``, который необходимо заполнить данными из файла ``env.sample
+
+- для запуска celery -A config beat -l INFO &  celery -A config worker -l INFO -P eventlet 
 ## Описание работы программы
 
 ## Автор проекта:
