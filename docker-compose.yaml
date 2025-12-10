@@ -31,6 +31,8 @@ services:
   college:
     build: .
     tty: true
+    environment:
+      HOST: db
     env_file:
       - .env
     ports:
