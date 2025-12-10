@@ -99,6 +99,7 @@ jobs:
             
             # Останавливаем старые контейнеры, если они есть
             sudo docker compose down || true
+            sudo docker system prune -a
             # Подтягиваем свежий код
             git pull origin develop || git clone -b develop git@github.com:${{ github.repository }}.git .
             # Собираем и запускаем контейнеры
