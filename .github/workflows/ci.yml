@@ -77,7 +77,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1 || mkdir -p /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1 && cd /home/${{ secrets.SERVER_USER }}/app/PythonProject30.1
+            cd drf
             cat << 'EOF' > .env
             SECRET_KEY=${{ secrets.SECRET_KEY }}
             NAME=${{ secrets.DATABASE_NAME }}
@@ -100,6 +100,6 @@ jobs:
             # Останавливаем старые контейнеры, если они есть
             sudo docker compose down || true
             # Подтягиваем свежий код
-            git pull origin feature || git clone -b feature git@github.com:${{ github.repository }}.git .
+            git pull origin develop || git clone -b develop git@github.com:${{ github.repository }}.git .
             # Собираем и запускаем контейнеры
             sudo docker compose up -d --build
