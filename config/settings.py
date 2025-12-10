@@ -179,7 +179,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 #  mail
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
+EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_USE_TLS = True if os.getenv('EMAIL_USE_TLS') == 'True' else False
 EMAIL_USE_SSL = True if os.getenv('EMAIL_USE_SSL') == 'True' else False
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
@@ -195,3 +195,6 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": timedelta(days=1),
     },
 }
+
+STATIC_ROOT = '/app/staticfiles'
+STATICFILES_DIRS = [ BASE_DIR / 'static',]
